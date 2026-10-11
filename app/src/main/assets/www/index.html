@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>1st Rate HQ Native Integration Test</title>
+<style>
+body{font:16px system-ui,sans-serif;background:#f2f6f7;color:#17333c;margin:0;padding:24px}main{max-width:640px;margin:auto}h1{font-size:26px}.badge{color:#8c4600}button,input{font:inherit;padding:14px;border-radius:10px;margin:6px 0;box-sizing:border-box}button{display:block;width:100%;background:#167d8d;color:white;border:0}input{width:100%;border:1px solid #91a8ac}pre{white-space:pre-wrap;background:white;padding:16px;border-radius:10px;max-height:240px;overflow:auto}video{width:100%;max-height:240px}small{color:#4b6269}
+</style></head><body><main>
+<p class="badge">DEVELOPMENT TEST PAGE · Temporary icon</p>
+<h1>1st Rate HQ Native Integration Test</h1>
+<p>This page exercises the native shell. Replace it with the production HQ web build.</p>
+<button id="open">Open Housecall Pro</button>
+<button id="check">Check Overlay Permission</button>
+<button id="request">Request Overlay Permission</button>
+<button id="stop">Stop Bubble</button>
+<label for="saved">Persistent localStorage value</label><input id="saved" placeholder="Type a value; restart the app to verify">
+<label for="session">In-memory session value</label><input id="session" placeholder="Type a value; open HCP and return">
+<button id="camera">Test Camera</button><button id="cameraStop">Stop Camera</button>
+<video id="preview" autoplay muted playsinline></video>
+<small id="loads"></small><pre id="log" role="status" aria-live="polite"></pre>
+<script>
+const log = text => { const node=document.querySelector('#log'); node.textContent=new Date().toLocaleTimeString()+' '+text+'\n'+node.textContent; };
+const invoke = async f => { try { if(!window.HQ) throw Error('Native bridge unavailable. In a browser, use the existing web fallback.'); const value=await f(); log('Native call accepted; permission snapshot: '+value); } catch(e) { log(e.message); } };
+document.querySelector('#open').onclick=()=>{ if(window.HQ) invoke(()=>HQ.openHcp()); else { log('Browser fallback: opening HCP listing'); window.location.href='https://play.google.com/store/apps/details?id=housecall.pros'; } };
+document.querySelector('#check').onclick=()=>invoke(()=>HQ.bubble.isAllowed());
+document.querySelector('#request').onclick=()=>invoke(()=>HQ.bubble.requestPermission());
+document.querySelector('#stop').onclick=()=>invoke(()=>HQ.bubble.stop());
+const saved=document.querySelector('#saved'); saved.value=localStorage.getItem('hq-test-value')||''; saved.oninput=()=>localStorage.setItem('hq-test-value',saved.value);
+const count=Number(localStorage.getItem('hq-test-loads')||0)+1; localStorage.setItem('hq-test-loads',count); document.querySelector('#loads').textContent='Document loads: '+count+' (must not increase when returning from HCP).';
+let stream; const stopCamera=()=>{if(stream) stream.getTracks().forEach(t=>t.stop());stream=null;document.querySelector('#preview').srcObject=null;};
+document.querySelector('#camera').onclick=async()=>{try{stopCamera();stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});document.querySelector('#preview').srcObject=stream;log('Camera granted');}catch(e){log('Camera: '+e.message);}};
+document.querySelector('#cameraStop').onclick=stopCamera;
+window.addEventListener('pagehide',stopCamera);
+window.addEventListener('hq-ready',()=>log('HQ bridge ready'));
+log('Test page loaded; localStorage restored.');
+</script></main></body></html>

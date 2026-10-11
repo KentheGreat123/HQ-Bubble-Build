@@ -1,0 +1,5 @@
+<!-- Temporary test monogram; replace with approved production HQ artwork. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="40dp" android:height="40dp" android:viewportWidth="40" android:viewportHeight="40">
+    <path android:fillColor="#167D8D" android:pathData="M20,0 A20,20 0,1 0,20 40 A20,20 0,1 0,20 0" />
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2.6" android:fillColor="@android:color/transparent" android:pathData="M8,12 L8,28 M16,12 L16,28 M8,20 L16,20 M25,12 C17,12 17,28 25,28 C33,28 33,12 25,12 M26,24 L33,31" />
+</vector>
