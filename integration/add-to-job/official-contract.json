@@ -1,0 +1,147 @@
+{
+  "reviewedOn": "2026-10-11",
+  "source": "https://docs.housecallpro.com/docs/housecall-public-api/99ba8250597cd-add-a-line-item-to-a-job",
+  "openApiExport": "https://stoplight.io/api/v1/projects/housecallpro/housecall-public-api/nodes/reference/housecall.v1.yaml?fromExportButton=true",
+  "exportSha256": "16bba973bae069e546529bf9d2afd836b1746ae557dcadb903c6924a7993a495",
+  "baseUrl": "https://api.housecallpro.com",
+  "method": "POST",
+  "path": "/jobs/{job_id}/line_items",
+  "createSchema": {
+    "title": "JobLineItemCreate",
+    "type": "object",
+    "description": "Object used to create a line on a job.",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string",
+        "description": ""
+      },
+      "unit_price": {
+        "type": "number",
+        "default": 0,
+        "description": "Selling price of a singe unit in cents."
+      },
+      "quantity": {
+        "type": "number",
+        "description": "The number of items being solid. This can be a float up to two decmial places.",
+        "default": 1
+      },
+      "unit_cost": {
+        "type": "number",
+        "description": "Direct cost to the company of a singe unit in cents. This value is used for job costing.",
+        "default": 0
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "materials",
+          "labor",
+          "fixed gratuity",
+          "fixed discount",
+          "percent discount"
+        ],
+        "default": "labor"
+      },
+      "taxable": {
+        "type": "boolean",
+        "default": true
+      },
+      "service_item_id": {
+        "type": "string",
+        "description": "ID of the service item this line item is based on, if applicable"
+      },
+      "service_item_type": {
+        "type": "string",
+        "enum": [
+          "market_place",
+          "organizational",
+          "pricebook_material"
+        ]
+      }
+    },
+    "required": [
+      "name"
+    ]
+  },
+  "responseSchema": {
+    "title": "LineItemReponse",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "unit_price": {
+        "type": "number"
+      },
+      "unit_cost": {
+        "type": "number"
+      },
+      "unit_of_measure": {
+        "type": "string"
+      },
+      "quantity": {
+        "type": "number"
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "materials",
+          "labor",
+          "fixed gratuity",
+          "fixed discount",
+          "percent discount"
+        ],
+        "default": "labor"
+      },
+      "taxable": {
+        "type": "boolean"
+      },
+      "amount": {
+        "type": "number"
+      },
+      "order_index": {
+        "type": "integer"
+      },
+      "service_item_id": {
+        "type": "string"
+      },
+      "service_item_type": {
+        "type": "string",
+        "enum": [
+          "market_place",
+          "organizational",
+          "pricebook_material"
+        ]
+      }
+    }
+  },
+  "documentedResponseCodes": [
+    "201"
+  ],
+  "jobsQuery": [
+    "scheduled_start_min",
+    "scheduled_start_max",
+    "scheduled_end_min",
+    "scheduled_end_max",
+    "employee_ids",
+    "customer_id",
+    "page",
+    "work_status",
+    "page_size",
+    "sort_direction",
+    "location_ids",
+    "expand",
+    "sort_by"
+  ],
+  "jobNumberField": "invoice_number",
+  "jobIdField": "id",
+  "jobDetailPath": "/jobs/{id}"
+}

@@ -1,0 +1,203 @@
+{
+  "reviewedOn": "2026-10-11",
+  "source": "https://stoplight.io/api/v1/projects/housecallpro/housecall-public-api/nodes/reference/housecall.v1.yaml?fromExportButton=true",
+  "sha256": "16bba973bae069e546529bf9d2afd836b1746ae557dcadb903c6924a7993a495",
+  "method": "PUT",
+  "path": "/jobs/{job_id}/line_items/{id}",
+  "operation": {
+    "summary": "Update a single line item for a job",
+    "operationId": "update-job-line-item",
+    "responses": {
+      "200": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LineItemResponse"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "All errors formatted in a sentence"
+                },
+                "attr1": {
+                  "type": "string",
+                  "description": "Error message for field attr1, where attr1 would be one of the attributes for line item"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        }
+      }
+    },
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/LineItem"
+          }
+        }
+      }
+    },
+    "tags": [
+      "Jobs"
+    ]
+  },
+  "requestSchema": {
+    "title": "LineItem",
+    "type": "object",
+    "properties": {
+      "service_item_id": {
+        "type": "string"
+      },
+      "service_item_type": {
+        "type": "string",
+        "enum": [
+          "market_place",
+          "organizational",
+          "pricebook_material"
+        ]
+      },
+      "name": {
+        "type": "string"
+      },
+      "unit_price": {
+        "type": "number"
+      },
+      "unit_cost": {
+        "type": "number"
+      },
+      "quantity": {
+        "type": "number"
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "materials",
+          "labor",
+          "fixed gratuity",
+          "fixed discount",
+          "percent discount"
+        ],
+        "default": "labor"
+      },
+      "taxable": {
+        "type": "boolean"
+      },
+      "description": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "name"
+    ]
+  },
+  "responseSchema": {
+    "title": "LineItemReponse",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "unit_price": {
+        "type": "number"
+      },
+      "unit_cost": {
+        "type": "number"
+      },
+      "unit_of_measure": {
+        "type": "string"
+      },
+      "quantity": {
+        "type": "number"
+      },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "materials",
+          "labor",
+          "fixed gratuity",
+          "fixed discount",
+          "percent discount"
+        ],
+        "default": "labor"
+      },
+      "taxable": {
+        "type": "boolean"
+      },
+      "amount": {
+        "type": "number"
+      },
+      "order_index": {
+        "type": "integer"
+      },
+      "service_item_id": {
+        "type": "string"
+      },
+      "service_item_type": {
+        "type": "string",
+        "enum": [
+          "market_place",
+          "organizational",
+          "pricebook_material"
+        ]
+      }
+    }
+  },
+  "authentication": {
+    "Company API Key": {
+      "name": "Authorization",
+      "type": "apiKey",
+      "in": "header",
+      "description": "Company API Key Authorization.\n\nAuthorization Header value format [Token {api-key}]"
+    },
+    "Application API Key": {
+      "name": "Authorization",
+      "type": "apiKey",
+      "in": "header",
+      "description": "Application API Key Authorization.\n\nAuthorization Header value format [Token {api-key}]"
+    },
+    "Housecall User OAuth Token": {
+      "type": "oauth2",
+      "description": "",
+      "flows": {
+        "clientCredentials": {
+          "tokenUrl": "",
+          "refreshUrl": "",
+          "scopes": {}
+        }
+      }
+    }
+  },
+  "limitations": [
+    "No SKU field in documented LineItemResponse",
+    "No conditional If-Match/revision or atomic increment documented",
+    "No documented update-specific permission scope or idempotency guarantee"
+  ]
+}

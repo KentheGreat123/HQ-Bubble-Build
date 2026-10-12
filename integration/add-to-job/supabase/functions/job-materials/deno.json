@@ -1,0 +1,4 @@
+{
+  "compilerOptions": { "checkJs": false, "strict": true },
+  "lock": "deno.lock"
+}

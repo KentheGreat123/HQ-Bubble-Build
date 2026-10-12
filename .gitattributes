@@ -1,0 +1,3 @@
+# Preserve the exact Phase 1 bytes tested and sealed for deployment review.
+# core.autocrlf must not silently change migration/runtime hashes at checkpoint.
+integration/add-to-job/** -text

@@ -1,0 +1,11 @@
+-- Catalog/migration metadata only. Never call a webhook or decrypt a secret.
+select json_build_object(
+ 'read_only',current_setting('transaction_read_only'),
+ 'storage_migrations',(select json_agg(json_build_object('id',id,'name',name,'hash',hash) order by id) from storage.migrations),
+ 'auth_migrations',(select json_agg(version order by version) from auth.schema_migrations),
+ 'auth_indexes',(select json_agg(json_build_object('name',c.relname,'owner',c.relowner::regrole,'definition',pg_get_indexdef(c.oid),'unique',i.indisunique,'valid',i.indisvalid,'ready',i.indisready,'constraint_backed',exists(select 1 from pg_constraint k where k.conindid=c.oid)) order by c.relname) from pg_index i join pg_class c on c.oid=i.indexrelid where i.indrelid='auth.users'::regclass),
+ 'functions_schema',(select json_build_object('owner',nspowner::regrole,'acl',nspacl,'anon_usage',has_schema_privilege('anon',oid,'USAGE'),'authenticated_usage',has_schema_privilege('authenticated',oid,'USAGE')) from pg_namespace where nspname='supabase_functions'),
+ 'functions_tables',(select json_agg(json_build_object('name',c.relname,'owner',c.relowner::regrole,'acl',c.relacl,'rls',c.relrowsecurity,'anon_access',has_table_privilege('anon',c.oid,'SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER'),'authenticated_access',has_table_privilege('authenticated',c.oid,'SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER')) order by c.relname) from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='supabase_functions' and c.relkind='r'),
+ 'functions_functions',(select json_agg(json_build_object('name',p.proname,'args',pg_get_function_identity_arguments(p.oid),'owner',p.proowner::regrole,'acl',p.proacl,'security_definer',p.prosecdef,'anon_execute',has_function_privilege('anon',p.oid,'EXECUTE'),'authenticated_execute',has_function_privilege('authenticated',p.oid,'EXECUTE')) order by p.proname) from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='supabase_functions'),
+ 'admin_defaults',(select json_agg(json_build_object('schema',case when defaclnamespace=0 then '' else defaclnamespace::regnamespace::text end,'type',defaclobjtype,'acl',defaclacl) order by defaclnamespace,defaclobjtype) from pg_default_acl where defaclrole='supabase_admin'::regrole)
+) metadata;

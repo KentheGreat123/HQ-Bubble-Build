@@ -1,0 +1,28 @@
+{
+  "status": "planning_only_not_applied",
+  "project_ref": "ixtnmcrtgcyojqrthbhw",
+  "approved_cors_origins": ["https://kenthegreat123.github.io"],
+  "testing_origins": [],
+  "auth_settings_pending_execution_approval": {
+    "disable_signup": true,
+    "external_anonymous_users_enabled": false,
+    "external_email_enabled": true,
+    "mailer_autoconfirm": false
+  },
+  "site_url_candidate": "https://kenthegreat123.github.io/1st-Rate-Parts-App/",
+  "implemented_auth_callback_verified": false,
+  "callback_urls_pending": [],
+  "invite_activation": "blocked_until_https_callback_and_smtp_delivery_are_verified",
+  "runtime_configuration_pending_execution_approval": {
+    "HQ_ALLOWED_ORIGINS": "https://kenthegreat123.github.io"
+  },
+  "verify_jwt": true,
+  "hcp_live_requests": false,
+  "hcp_live_writes": false,
+  "sdk_browser_cors_header_update": {
+    "implemented_locally": ["x-client-info"],
+    "production_origin_enforced_in_entrypoint": true,
+    "unit_and_deno_runtime_verified": true,
+    "hosted_deployed": false
+  }
+}

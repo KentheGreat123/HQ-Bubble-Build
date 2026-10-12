@@ -1,0 +1,21 @@
+{
+  "name": "hq-add-to-job-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "test:database": "node --test test/database/postgres.test.mjs",
+    "test:native": "node --test test/database/native.test.mjs",
+    "test:supabase:local": "node --test test/database/supabase-local.test.mjs",
+    "test:phase1": "node --test test/architecture.test.mjs test/integration.test.mjs test/cors.test.mjs test/migration-atomicity.test.mjs test/database/postgres.test.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "@deno/win32-x64": "2.9.6",
+    "pg": "8.16.3"
+  }
+}

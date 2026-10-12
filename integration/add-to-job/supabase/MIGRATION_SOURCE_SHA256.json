@@ -1,0 +1,19 @@
+{
+  "project": "ixtnmcrtgcyojqrthbhw",
+  "branch": "bubble-add",
+  "comparison": "exact bytes match reviewed locally tested migrations",
+  "migrations": [
+    {
+      "path": "integration/add-to-job/supabase/migrations/202610110001_schema.sql",
+      "sha256": "69C218237C082E2BC33483EB1EE1E8483A037405E0BE6836A4FAB652457B94CD"
+    },
+    {
+      "path": "integration/add-to-job/supabase/migrations/202610110002_security.sql",
+      "sha256": "7BB1FA4D4EFE30530D6785B0C081F50BACD1D6F20208AEE7F248C75515C8321D"
+    },
+    {
+      "path": "integration/add-to-job/supabase/migrations/202610110003_transactions.sql",
+      "sha256": "CFBCFA9A0841411690FD52CC4D184B96D05B6042207BE337E355AA6167E281D3"
+    }
+  ]
+}
